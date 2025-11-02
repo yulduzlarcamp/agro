@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zamonaviy Test Menyusi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .zor-test-menu {
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px 0;
+            padding: 30px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,.1);
+            border: 1px solid #e8f5e9;
+        }
+
+        .zor-test-menu .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #81c784;
+        }
+
+        .zor-test-menu .header h2 {
+            font-size: 2.2rem;
+            color: #1b5e20;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .zor-test-menu .header h2 i {
+            font-size: 2.5rem;
+            color: #4caf50;
+        }
+
+        .zor-test-menu .controls {
+            display: flex;
+            gap: 15px;
+            min-width: 350px;
+            flex-wrap: wrap;
+        }
+
+        .zor-test-menu input, .zor-test-menu select {
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 14px;
+            font-size: 1rem;
+            background: #f9f9f9;
+            transition: all .3s;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .zor-test-menu input:focus, .zor-test-menu select:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 4px rgba(76,175,80,.15);
+            background: #fff;
+        }
+
+        .zor-test-menu .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .zor-test-menu .card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,.08);
+            transition: all .4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .zor-test-menu .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #81c784, #4caf50);
+            opacity: 0;
+            transition: all .3s;
+        }
+
+        .zor-test-menu .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,.15);
+            border-color: #4caf50;
+        }
+
+        .zor-test-menu .card:hover::after {
+            opacity: 1;
+        }
+
+        .zor-test-menu .card-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            color: #fff;
+            text-align: center;
+            position: relative;
+        }
+
+        .zor-test-menu .card-header h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .zor-test-menu .card-header .cat {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .zor-test-menu .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .zor-test-menu .info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .zor-test-menu .info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .zor-test-menu .progress-container {
+            margin: 15px 0;
+        }
+
+        .zor-test-menu .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .zor-test-menu .progress {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .zor-test-menu .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #81c784);
+            border-radius: 4px;
+            width: 0%;
+            transition: width .8s ease;
+            position: relative;
+        }
+
+        .zor-test-menu .bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(
+                -45deg, 
+                rgba(255,255,255,0.2) 25%, 
+                transparent 25%, 
+                transparent 50%, 
+                rgba(255,255,255,0.2) 50%, 
+                rgba(255,255,255,0.2) 75%, 
+                transparent 75%, 
+                transparent
+            );
+            background-size: 20px 20px;
+            animation: move 1s linear infinite;
+        }
+
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 0; }
+        }
+
+        .zor-test-menu .stars {
+            display: flex;
+            gap: 5px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+
+        .zor-test-menu .stars span {
+            color: #ddd;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .zor-test-menu .stars span.filled {
+            color: #ffc107;
+            text-shadow: 0 0 5px rgba(255,193,7,0.5);
+        }
+
+        .zor-test-menu .stars span:hover {
+            transform: scale(1.3);
+        }
+
+        .zor-test-menu .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: auto;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .zor-test-menu .btn:hover {
+            background: linear-gradient(135deg, #388e3c, #1b5e20);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56,142,60,.3);
+        }
+
+        .zor-test-menu .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .zor-test-menu .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            color: #666;
+        }
+
+        .zor-test-menu .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .zor-test-menu .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .zor-test-menu .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .zor-test-menu .controls {
+                min-width: 100%;
+                flex-direction: column;
+            }
+            
+            .zor-test-menu input, .zor-test-menu select {
+                min-width: 100%;
+            }
+            
+            .zor-test-menu .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .zor-test-menu .header h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="zor-test-menu">
+        <!-- HEADER: Qidiruv + Filtr -->
+        <div class="header">
+            <h2><i class="fas fa-clipboard-list"></i> Testlar Ro'yxati</h2>
+            <div class="controls">
+                <input type="text" placeholder="Test nomi bo'yicha qidirish..." id="search">
+                <select id="filter">
+                    <option value="">Barcha bo'limlar</option>
+                    <option value="hamshira">AGROS HAMSHIRA</option>
+                    <option value="patranaj">AGROS PATRANAJ</option>
+                    <option value="qogan">AGROS QO'G'ONLARI</option>
+                    <option value="tibbiy">TIBBIY XIZMATLAR</option>
+                    <option value="uy">UY SHAROITIDA</option>
+                    <option value="aloqa">ALOQA</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- TESTLAR GRID -->
+        <div class="grid" id="testGrid">
+            <!-- JS orqali kartochkalar chiqadi -->
+        </div>
+    </div>
+
+    <script>
+        // Testlar ma'lumotlari
+        const tests = [
+            { 
+                id: "hamshira", 
+                title: "Hamshira Asoslari", 
+                cat: "hamshira", 
+                q: 15, 
+                prog: 80, 
+                rate: 4,
+                desc: "Hamshiralik asoslari va kasbiy ko'nikmalar"
+            },
+            { 
+                id: "patranaj_vrach", 
+                title: "Patranaj Vrach", 
+                cat: "patranaj", 
+                q: 12, 
+                prog: 60, 
+                rate: 3,
+                desc: "Vrachlar uchun patranaj amaliyotlari"
+            },
+            { 
+                id: "patranaj_hamshira", 
+                title: "Patranaj Hamshira", 
+                cat: "patranaj", 
+                q: 10, 
+                prog: 100, 
+                rate: 5,
+                desc: "Hamshiralar uchun patranaj texnikasi"
+            },
+            { 
+                id: "qogan", 
+                title: "Qo'g'onlar Tuzilmasi", 
+                cat: "qogan", 
+                q: 8, 
+                prog: 40, 
+                rate: 2,
+                desc: "Qo'g'onlar anatomiyasi va fiziologiyasi"
+            },
+            { 
+                id: "tibbiy", 
+                title: "Tibbiy Xizmatlar", 
+                cat: "tibbiy", 
+                q: 20, 
+                prog: 0, 
+                rate: 0,
+                desc: "Tibbiy xizmatlar tashkil etish"
+            },
+            { 
+                id: "uy", 
+                title: "Uy Sharoitida Yordam", 
+                cat: "uy", 
+                q: 10, 
+                prog: 20, 
+                rate: 1,
+                desc: "Uy sharoitida tibbiy yordam ko'rsatish"
+            },
+            { 
+                id: "aloqa", 
+                title: "Aloqa va Muloqot", 
+                cat: "aloqa", 
+                q: 7, 
+                prog: 0, 
+                rate: 0,
+                desc: "Bemorlar bilan samarali muloqot"
+            }
+        ];
+
+        const catNames = { 
+            hamshira: "AGROS HAMSHIRA", 
+            patranaj: "AGROS PATRANAJ", 
+            qogan: "AGROS QO'G'ONLARI", 
+            tibbiy: "TIBBIY XIZMATLAR", 
+            uy: "UY SHAROITIDA", 
+            aloqa: "ALOQA" 
+        };
+
+        const grid = document.getElementById('testGrid');
+        const search = document.getElementById('search');
+        const filter = document.getElementById('filter');
+
+        function render() {
+            let data = tests;
+            const s = search.value.toLowerCase();
+            const f = filter.value;
+
+            if (s) data = data.filter(t => 
+                t.title.toLowerCase().includes(s) || 
+                t.desc.toLowerCase().includes(s)
+            );
+            if (f) data = data.filter(t => t.cat === f);
+
+            if (data.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>Hech narsa topilmadi</h3>
+                        <p>Boshqa kalit so'zlar bilan qayta urinib ko'ring yoki filterni o'zgartiring</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = data.map(t => `
+                <div class="card" onclick="startTest('${t.id}')">
+                    <div class="card-header">
+                        <h3>${t.title}</h3>
+                        <div class="cat">${catNames[t.cat]}</div>
+                    </div>
+                    <div class="card-body">
+                        <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">${t.desc}</p>
+                        <div class="info">
+                            <span><i class="fas fa-question-circle"></i> ${t.q} ta savol</span>
+                            <span><i class="fas fa-tasks"></i> ${t.prog}% bajarildi</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progress</span>
+                                <span>${t.prog}%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="bar" style="width:${t.prog}%"></div>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            ${[1,2,3,4,5].map(i => `
+                                <span class="${i <= t.rate ? 'filled' : ''}" onclick="rate(event, '${t.id}', ${i})">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                            `).join('')}
+                        </div>
+                        <button class="btn">
+                            <i class="fas fa-play-circle"></i> Testni Boshlash
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Qidiruv va filtr
+        search.addEventListener('input', render);
+        filter.addEventListener('change', render);
+
+        // Baho berish
+        window.rate = function(e, id, rating) {
+            e.stopPropagation();
+            const test = tests.find(t => t.id === id);
+            if (test) {
+                test.rate = rating;
+                // Animatsiya effekti
+                const stars = e.currentTarget.parentElement.querySelectorAll('span');
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.classList.add('filled');
+                    } else {
+                        star.classList.remove('filled');
+                    }
+                });
+                
+                // Kichik bildirishnoma
+                showNotification(`"${test.title}" testiga ${rating} yulduzli baho berdingiz`);
+            }
+        };
+
+        // Test boshlash
+        window.startTest = function(id) {
+            const test = tests.find(t => t.id === id);
+            if (test) {
+                const btn = event.target.closest('.card').querySelector('.btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<div class="loading"></div> Yuklanmoqda...';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    showNotification(`"${test.title}" testi boshlandi!`);
+                    // Bu yerdan testni yuklash funksiyasini chaqiring
+                    // masalan: loadWithProgress(id);
+                }, 1500);
+            }
+        };
+
+        // Bildirishnoma funksiyasi
+        function showNotification(message) {
+            // Soddalashtirilgan bildirishnoma
+            alert(message);
+            // Haqiqiy loyihada toast yoki boshqa bildirishnoma kutubxonasidan foydalanish mumkin
+        }
+
+        // Dastlabki render
+        render();
+    </script>
+</body>
+</html>
